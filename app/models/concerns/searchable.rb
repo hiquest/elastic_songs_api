@@ -12,14 +12,25 @@ module Searchable
       indexes :genre, type: :keyword
     end
 
-    def self.search(query)
+    def self.search(query, genre = nil)
       params = {
         query: {
-          multi_match: {
-            query: query, 
-            fields: [ :title, :artist, :lyrics ] 
-          },
-        },
+          bool: {
+            must: [
+              {
+                multi_match: {
+                  query: query, 
+                  fields: [ :title, :artist, :lyrics ] 
+                }
+              },
+            ],
+            filter: [
+              {
+                term: { genre: genre }
+              }
+            ]
+          }
+        }
       }
 
       self.__elasticsearch__.search(params)
