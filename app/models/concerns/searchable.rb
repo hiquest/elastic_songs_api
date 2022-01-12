@@ -15,8 +15,9 @@ module Searchable
     def self.search(query)
       params = {
         query: {
-          match: {
-            artist: query,
+          multi_match: {
+            query: query, 
+            fields: [ :title, :artist, :lyrics ] 
           },
         },
       }
