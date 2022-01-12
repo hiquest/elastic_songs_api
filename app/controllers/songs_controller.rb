@@ -3,9 +3,9 @@ class SongsController < ApplicationController
 
   # GET /songs
   def index
-    @songs = Song.all
-
-    render json: @songs
+    query = params["query"] || ""
+    res = Song.search(query)
+    render json: res.response["hits"]["hits"]
   end
 
   # GET /songs/1
