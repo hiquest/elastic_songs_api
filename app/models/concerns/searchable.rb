@@ -13,7 +13,15 @@ module Searchable
     end
 
     def self.search(query)
-      self.__elasticsearch__.search(query)
+      params = {
+        query: {
+          match: {
+            artist: query,
+          },
+        },
+      }
+
+      self.__elasticsearch__.search(params)
     end
   end
 end
