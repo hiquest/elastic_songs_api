@@ -6,7 +6,10 @@ module Searchable
     include Elasticsearch::Model::Callbacks
 
     mapping do
-      # mapping definition goes here
+      indexes :author, type: :text
+      indexes :title, type: :text
+      indexes :lyrics, type: :text
+      indexes :genre, type: :keyword
     end
 
     def self.search(query)
